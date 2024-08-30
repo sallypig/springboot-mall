@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.sallypig.springboot_mall.dao.ProductDao;
+import com.sallypig.springboot_mall.dto.ProductRequest;
 import com.sallypig.springboot_mall.model.Product;
 import com.sallypig.springboot_mall.service.ProductService;
 
@@ -16,6 +17,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product geProductById(Integer productId) {
         return productDao.geProductById(productId);
+    }
+
+    @Override
+    public Integer createProduct(ProductRequest productRequest) {
+        return productDao.createProduct(productRequest);
     }
 
 }

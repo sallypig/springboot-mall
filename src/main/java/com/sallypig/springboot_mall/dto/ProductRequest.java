@@ -1,28 +1,28 @@
-package com.sallypig.springboot_mall.model;
-
-import java.util.Date;
+package com.sallypig.springboot_mall.dto;
 
 import com.sallypig.springboot_mall.constant.ProductCategory;
 
-public class Product {
+import jakarta.validation.constraints.NotNull;
 
-    private Integer product_id;
+public class ProductRequest {
+
+    // 新增商品前端傳進來的值
+    @NotNull
     private String productName;
+
+    @NotNull
     private ProductCategory category;
+
+    @NotNull
     private String imageUrl;
+
+    @NotNull
     private Integer price;
+
+    @NotNull
     private Integer stock;
+
     private String description;
-    private Date createdDate;
-    private Date last_modifiedDate;
-
-    public Integer getProduct_id() {
-        return this.product_id;
-    }
-
-    public void setProduct_id(Integer product_id) {
-        this.product_id = product_id;
-    }
 
     public String getProductName() {
         return this.productName;
@@ -70,22 +70,6 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Date getCreatedDate() {
-        return this.createdDate;
-    }
-
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public Date getLast_modifiedDate() {
-        return this.last_modifiedDate;
-    }
-
-    public void setLast_modifiedDate(Date last_modifiedDate) {
-        this.last_modifiedDate = last_modifiedDate;
     }
 
 }
