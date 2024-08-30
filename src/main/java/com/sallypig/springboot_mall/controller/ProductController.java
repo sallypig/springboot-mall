@@ -1,5 +1,7 @@
 package com.sallypig.springboot_mall.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +24,13 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+
+    // restful理念：不論productList是否存在 只要@GetMapping("/products")這資源存在，就是回200
+    @GetMapping("/products")
+    public ResponseEntity<List<Product>> getProducts() {
+        List<Product> product = productService.getProducts();
+        return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(product);
+    }
 
     @GetMapping("/products/{productId}")
     public ResponseEntity<Product> getProduct(@PathVariable Integer productId) {
