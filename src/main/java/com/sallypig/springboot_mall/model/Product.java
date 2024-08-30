@@ -2,11 +2,13 @@ package com.sallypig.springboot_mall.model;
 
 import java.util.Date;
 
+import com.sallypig.springboot_mall.constant.ProductCategory;
+
 public class Product {
 
     private Integer product_id;
     private String product_name;
-    private String category;
+    private ProductCategory category;
     private String image_url;
     private Integer price;
     private Integer stock;
@@ -30,11 +32,11 @@ public class Product {
         this.product_name = product_name;
     }
 
-    public String getCategory() {
+    public ProductCategory getCategory() {
         return this.category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(ProductCategory category) {
         this.category = category;
     }
 

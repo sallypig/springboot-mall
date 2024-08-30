@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
+import com.sallypig.springboot_mall.constant.ProductCategory;
 import com.sallypig.springboot_mall.model.Product;
 
 public class ProductRowMapper implements RowMapper<Product> {
@@ -15,7 +16,13 @@ public class ProductRowMapper implements RowMapper<Product> {
 
         product.setProduct_id(resultSet.getInt("product_id"));
         product.setProduct_name(resultSet.getString("product_name"));
-        product.setCategory(resultSet.getString("category"));
+
+        // String categoryStr = resultSet.getString("category");
+        // ProductCategory category = ProductCategory.valueOf(categoryStr);
+        // product.setCategory(category);
+        product.setCategory(ProductCategory.valueOf(resultSet.getString("category")));
+        // 若是資料庫中的值非ProductCategory:(FOOD) 會回500，有幫助看資料庫是否受汙染
+
         product.setImage_url(resultSet.getString("image_url"));
         product.setPrice(resultSet.getInt("price"));
         product.setStock(resultSet.getInt("stock"));
