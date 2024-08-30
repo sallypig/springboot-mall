@@ -3,6 +3,7 @@ package com.sallypig.springboot_mall.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -58,4 +59,12 @@ public class ProductController {
         return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(updatedProduct);
     }
 
+    // 刪除，無論是否有刪到商品，只要商品不存在 都是回傳204，才是正確的後端設計
+    @DeleteMapping("/products/{productId}")
+    public ResponseEntity<?> deleteProduct(@PathVariable Integer productId) {
+
+        productService.deleteProduct(productId);
+
+        return ResponseEntity.status(HttpStatusCode.valueOf(204)).build();
+    }
 }
