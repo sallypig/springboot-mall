@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sallypig.springboot_mall.constant.ProductCategory;
 import com.sallypig.springboot_mall.dto.ProductRequest;
 import com.sallypig.springboot_mall.model.Product;
 import com.sallypig.springboot_mall.service.ProductService;
@@ -27,8 +29,11 @@ public class ProductController {
 
     // restful理念：不論productList是否存在 只要@GetMapping("/products")這資源存在，就是回200
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> getProducts() {
-        List<Product> product = productService.getProducts();
+    public ResponseEntity<List<Product>> getProducts(
+            @RequestParam(required = false) ProductCategory category,
+            @RequestParam(required = false) String search
+    ) {
+        List<Product> product = productService.getProducts(category, search);
         return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(product);
     }
 
