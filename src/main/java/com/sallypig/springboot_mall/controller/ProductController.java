@@ -31,12 +31,18 @@ public class ProductController {
     // restful理念：不論productList是否存在 只要@GetMapping("/products")這資源存在，就是回200
     @GetMapping("/products")
     public ResponseEntity<List<Product>> getProducts(
+            // 查詢條件 Filtering
             @RequestParam(required = false) ProductCategory category,
-            @RequestParam(required = false) String search
+            @RequestParam(required = false) String search,
+            // 排序 Sorting
+            @RequestParam(defaultValue = "created_date") String orderBy,
+            @RequestParam(defaultValue = "desc") String sort
     ) {
         ProductQuaryParams productQuaryParams = new ProductQuaryParams();
         productQuaryParams.setCategory(category);
         productQuaryParams.setSearch(search);
+        productQuaryParams.setOrderBy(orderBy);
+        productQuaryParams.setSort(sort);
 
         List<Product> product = productService.getProducts(productQuaryParams);
 
