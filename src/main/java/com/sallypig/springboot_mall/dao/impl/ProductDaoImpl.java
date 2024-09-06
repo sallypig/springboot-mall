@@ -12,8 +12,8 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
-import com.sallypig.springboot_mall.constant.ProductCategory;
 import com.sallypig.springboot_mall.dao.ProductDao;
+import com.sallypig.springboot_mall.dto.ProductQuaryParams;
 import com.sallypig.springboot_mall.dto.ProductRequest;
 import com.sallypig.springboot_mall.model.Product;
 import com.sallypig.springboot_mall.rowmapper.ProductRowMapper;
@@ -25,20 +25,20 @@ public class ProductDaoImpl implements ProductDao {
     NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Override
-    public List<Product> getProducts(ProductCategory category, String search) {
+    public List<Product> getProducts(ProductQuaryParams productQuaryParams) {
         String sql = "SELECT product_id, product_name, category, image_url, price, stock, description, created_date, last_modified_date FROM product WHERE 1=1";
         // WHERE 1=1 使可以自由拼接
 
         Map<String, Object> map = new HashMap<>();
 
-        if (category != null) {
+        if (productQuaryParams.getCategory() != null) {
             sql += " AND category = :category";
-            map.put("category", category.name());
+            map.put("category", productQuaryParams.getCategory().name());
         }
 
-        if (search != null) {
+        if (productQuaryParams.getSearch() != null) {
             sql += " AND product_name LIKE :search";
-            map.put("search", "%" + search + "%");
+            map.put("search", "%" + productQuaryParams.getSearch() + "%");
         }
 
         List<Product> productList = namedParameterJdbcTemplate.query(sql, map, new ProductRowMapper());

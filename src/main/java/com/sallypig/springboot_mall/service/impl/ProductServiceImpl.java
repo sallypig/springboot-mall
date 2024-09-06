@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.sallypig.springboot_mall.constant.ProductCategory;
 import com.sallypig.springboot_mall.dao.ProductDao;
+import com.sallypig.springboot_mall.dto.ProductQuaryParams;
 import com.sallypig.springboot_mall.dto.ProductRequest;
 import com.sallypig.springboot_mall.model.Product;
 import com.sallypig.springboot_mall.service.ProductService;
@@ -38,8 +38,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getProducts(ProductCategory category, String search) {
-        return productDao.getProducts(category, search);
+    public List<Product> getProducts(ProductQuaryParams productQuaryParams) {
+        return productDao.getProducts(productQuaryParams);
     }
 
 }
