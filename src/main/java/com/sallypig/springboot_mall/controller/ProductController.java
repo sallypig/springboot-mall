@@ -21,6 +21,8 @@ import com.sallypig.springboot_mall.model.Product;
 import com.sallypig.springboot_mall.service.ProductService;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 
 @RestController
 public class ProductController {
@@ -36,13 +38,18 @@ public class ProductController {
             @RequestParam(required = false) String search,
             // 排序 Sorting
             @RequestParam(defaultValue = "created_date") String orderBy,
-            @RequestParam(defaultValue = "desc") String sort
+            @RequestParam(defaultValue = "desc") String sort,
+            // 分頁 Pagination
+            @RequestParam(defaultValue = "5") @Max(1000) @Min(0) Integer limit,
+            @RequestParam(defaultValue = "0") @Min(0) Integer offset
     ) {
         ProductQuaryParams productQuaryParams = new ProductQuaryParams();
         productQuaryParams.setCategory(category);
         productQuaryParams.setSearch(search);
         productQuaryParams.setOrderBy(orderBy);
         productQuaryParams.setSort(sort);
+        productQuaryParams.setLimit(limit);
+        productQuaryParams.setOffset(offset);
 
         List<Product> product = productService.getProducts(productQuaryParams);
 
