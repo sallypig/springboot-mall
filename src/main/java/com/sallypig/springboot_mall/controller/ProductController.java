@@ -19,6 +19,7 @@ import com.sallypig.springboot_mall.dto.ProductQuaryParams;
 import com.sallypig.springboot_mall.dto.ProductRequest;
 import com.sallypig.springboot_mall.model.Product;
 import com.sallypig.springboot_mall.service.ProductService;
+import com.sallypig.springboot_mall.util.Page;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
@@ -32,7 +33,7 @@ public class ProductController {
 
     // restful理念：不論productList是否存在 只要@GetMapping("/products")這資源存在，就是回200
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> getProducts(
+    public ResponseEntity<Page<Product>> getProducts( //回傳Page類型的Product數據
             // 查詢條件 Filtering
             @RequestParam(required = false) ProductCategory category,
             @RequestParam(required = false) String search,
@@ -51,9 +52,20 @@ public class ProductController {
         productQuaryParams.setLimit(limit);
         productQuaryParams.setOffset(offset);
 
+        // 取得 product list
         List<Product> product = productService.getProducts(productQuaryParams);
 
-        return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(product);
+        // 取得 product 總數
+        Integer total = productService.countProduct(productQuaryParams);
+
+        // 分頁
+        Page<Product> page = new Page<>();
+        page.setLimit(limit);
+        page.setOffset(offset);
+        page.setTotal(total);
+        page.setResults(product);
+
+        return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(page);
     }
 
     @GetMapping("/products/{productId}")

@@ -8,6 +8,8 @@ import com.sallypig.springboot_mall.model.Product;
 
 public interface ProductDao {
 
+    Integer countProduct(ProductQuaryParams productQuaryParams);
+
     List<Product> getProducts(ProductQuaryParams productQuaryParams);
 
     Product geProductById(Integer productId);
