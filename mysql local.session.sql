@@ -4,6 +4,8 @@ CREATE DATABASE mall;
 
 USE mall;
 
+-- product
+
 CREATE TABLE product
 (
     product_id         INT          NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -30,3 +32,14 @@ INSERT INTO product (product_name, category, image_url, price, stock, descriptio
 
 -- 跳過前3筆數據 取2筆數據
 SELECT * FROM product LIMIT 2 OFFSET 3;
+
+-- User
+
+CREATE TABLE user
+(
+    user_id            INT          NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    email              VARCHAR(256) NOT NULL UNIQUE KEY, -- 一個信箱只能有一個帳號
+    password           VARCHAR(256) NOT NULL,
+    created_date       TIMESTAMP    NOT NULL,
+    last_modified_date TIMESTAMP    NOT NULL
+);
