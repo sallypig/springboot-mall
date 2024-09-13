@@ -1,10 +1,12 @@
 package com.sallypig.springboot_mall.dto;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 public class UserRegisterRequest {
 
     @NotBlank //不能是空字串
+    @Email
     private String email;
 
     @NotBlank
