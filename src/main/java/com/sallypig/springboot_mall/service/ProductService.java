@@ -12,7 +12,7 @@ public interface ProductService {
 
     List<Product> getProducts(ProductQuaryParams productQuaryParams);
 
-    Product geProductById(Integer productId);
+    Product getProductById(Integer productId);
 
     Integer createProduct(ProductRequest productRequest);
 

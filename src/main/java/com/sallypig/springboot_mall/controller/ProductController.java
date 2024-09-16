@@ -70,7 +70,7 @@ public class ProductController {
 
     @GetMapping("/products/{productId}")
     public ResponseEntity<Product> getProduct(@PathVariable Integer productId) {
-        Product product = productService.geProductById(productId);
+        Product product = productService.getProductById(productId);
         System.out.println(product);
         if (product != null) {
             return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(product);
@@ -83,7 +83,7 @@ public class ProductController {
     public ResponseEntity<Product> createProduct(@RequestBody @Valid ProductRequest productRequest) {
         Integer productId = productService.createProduct(productRequest);
 
-        Product product = productService.geProductById(productId);
+        Product product = productService.getProductById(productId);
 
         return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(product);
     }
@@ -91,7 +91,7 @@ public class ProductController {
     @PutMapping("/products/{productId}")
     public ResponseEntity<Product> updateProduct(@PathVariable Integer productId, @RequestBody ProductRequest productRequest) {
         // 檢查 product 是否存在
-        Product product = productService.geProductById(productId);
+        Product product = productService.getProductById(productId);
         if (product == null) {
             return ResponseEntity.status(HttpStatusCode.valueOf(404)).build();
         }
@@ -99,7 +99,7 @@ public class ProductController {
         // 修改商品的數據
         productService.updateProduct(productId, productRequest);
 
-        Product updatedProduct = productService.geProductById(productId);
+        Product updatedProduct = productService.getProductById(productId);
 
         return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(updatedProduct);
     }
