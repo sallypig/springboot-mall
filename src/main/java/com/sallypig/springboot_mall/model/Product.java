@@ -6,7 +6,7 @@ import com.sallypig.springboot_mall.constant.ProductCategory;
 
 public class Product {
 
-    private Integer product_id;
+    private Integer productId;
     private String productName;
     private ProductCategory category;
     private String imageUrl;
@@ -16,12 +16,12 @@ public class Product {
     private Date createdDate;
     private Date last_modifiedDate;
 
-    public Integer getProduct_id() {
-        return this.product_id;
+    public Integer getProductId() {
+        return this.productId;
     }
 
     public void setProduct_id(Integer product_id) {
-        this.product_id = product_id;
+        this.productId = product_id;
     }
 
     public String getProductName() {
