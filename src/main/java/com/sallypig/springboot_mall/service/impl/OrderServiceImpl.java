@@ -11,6 +11,7 @@ import com.sallypig.springboot_mall.dao.OrderDao;
 import com.sallypig.springboot_mall.dao.ProductDao;
 import com.sallypig.springboot_mall.dto.BuyItem;
 import com.sallypig.springboot_mall.dto.CreateOrderRequest;
+import com.sallypig.springboot_mall.model.Order;
 import com.sallypig.springboot_mall.model.OrderItem;
 import com.sallypig.springboot_mall.model.Product;
 import com.sallypig.springboot_mall.service.OrderService;
@@ -51,5 +52,15 @@ public class OrderServiceImpl implements OrderService {
         orderDao.createOrderItems(orderId, orderItemList);
 
         return orderId;
+    }
+
+    @Override
+    public Order getOrderById(Integer orderId) {
+        Order order = orderDao.getOrderById(orderId);
+
+        List<OrderItem> orderItemList = orderDao.getOrderItemsById(orderId);
+        order.setOrderItemList(orderItemList);
+
+        return order;
     }
 }

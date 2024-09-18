@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sallypig.springboot_mall.dto.CreateOrderRequest;
+import com.sallypig.springboot_mall.model.Order;
 import com.sallypig.springboot_mall.service.OrderService;
 
 import jakarta.validation.Valid;
@@ -24,7 +25,9 @@ public class OrderController {
 
         Integer orderId = orderService.createOrder(userId, createOrderRequest);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(orderId);
+        Order order = orderService.getOrderById(orderId);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(order);
     }
 
 }
