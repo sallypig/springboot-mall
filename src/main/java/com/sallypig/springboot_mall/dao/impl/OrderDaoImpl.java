@@ -13,6 +13,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
 import com.sallypig.springboot_mall.dao.OrderDao;
+import com.sallypig.springboot_mall.dto.OrderQuaryParams;
 import com.sallypig.springboot_mall.model.Order;
 import com.sallypig.springboot_mall.model.OrderItem;
 import com.sallypig.springboot_mall.rowmapper.OrderItemRowMapper;
@@ -23,6 +24,43 @@ public class OrderDaoImpl implements OrderDao {
 
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    @Override
+    public Integer countOrder(OrderQuaryParams orderQuaryParams) {
+        String sql = "SELECT count(*) FROM `order` WHERE 1=1";
+
+        Map<String, Object> map = new HashMap<>();
+
+        // 查詢條件
+        sql = addFilteringSql(sql, map, orderQuaryParams);
+
+        Integer total = namedParameterJdbcTemplate.queryForObject(sql, map, Integer.class);
+
+        return total;
+    }
+
+    @Override
+    public List<Order> getOrders(OrderQuaryParams orderQuaryParams) {
+        String sql = "SELECT order_id, user_id, total_amount, created_date, last_modified_date FROM `order` WHERE 1=1";
+        // WHERE 1=1 使可以自由拼接
+
+        Map<String, Object> map = new HashMap<>();
+
+        // 查詢條件
+        sql = addFilteringSql(sql, map, orderQuaryParams);
+
+        // 排序
+        sql = sql + " ORDER BY created_date DESC";
+
+        // 分頁
+        sql = sql + " LIMIT :limit OFFSET :offset";
+        map.put("limit", orderQuaryParams.getLimit());
+        map.put("offset", orderQuaryParams.getOffset());
+
+        List<Order> orderList = namedParameterJdbcTemplate.query(sql, map, new OrderRowMapper());
+
+        return orderList;
+    }
 
     @Override
     public Integer createOrder(Integer userId, Integer totalAmount) {
@@ -93,7 +131,7 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public List<OrderItem> getOrderItemsById(Integer orderId) {
+    public List<OrderItem> getOrderItemsByOrderId(Integer orderId) {
         String sql = "SELECT oi.order_item_id, oi.order_id, oi.product_id, oi.quantity, oi.amount, p.product_name, p.image_url FROM `order_item` as oi LEFT JOIN product as p ON oi.product_id = p.product_id WHERE oi.order_id = :orderId";
 
         Map<String, Object> map = new HashMap<>();
@@ -102,5 +140,15 @@ public class OrderDaoImpl implements OrderDao {
         List<OrderItem> orderItemList = namedParameterJdbcTemplate.query(sql, map, new OrderItemRowMapper());
 
         return orderItemList;
+    }
+
+    // private 只有這個class可以用
+    private String addFilteringSql(String sql, Map<String, Object> map, OrderQuaryParams orderQuaryParams) {
+        if (orderQuaryParams.getUserId() != null) {
+            sql = sql + " AND user_Id = :userId";
+            map.put("userId", orderQuaryParams.getUserId());
+        }
+
+        return sql;
     }
 }

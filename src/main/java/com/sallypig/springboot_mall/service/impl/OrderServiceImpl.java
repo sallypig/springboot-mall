@@ -15,6 +15,7 @@ import com.sallypig.springboot_mall.dao.ProductDao;
 import com.sallypig.springboot_mall.dao.UserDao;
 import com.sallypig.springboot_mall.dto.BuyItem;
 import com.sallypig.springboot_mall.dto.CreateOrderRequest;
+import com.sallypig.springboot_mall.dto.OrderQuaryParams;
 import com.sallypig.springboot_mall.model.Order;
 import com.sallypig.springboot_mall.model.OrderItem;
 import com.sallypig.springboot_mall.model.Product;
@@ -88,9 +89,26 @@ public class OrderServiceImpl implements OrderService {
     public Order getOrderById(Integer orderId) {
         Order order = orderDao.getOrderById(orderId);
 
-        List<OrderItem> orderItemList = orderDao.getOrderItemsById(orderId);
+        List<OrderItem> orderItemList = orderDao.getOrderItemsByOrderId(orderId);
         order.setOrderItemList(orderItemList);
 
         return order;
+    }
+
+    @Override
+    public Integer countOrder(OrderQuaryParams orderQuaryParams) {
+        return orderDao.countOrder(orderQuaryParams);
+    }
+
+    @Override
+    public List<Order> getOrders(OrderQuaryParams orderQuaryParams) {
+        List<Order> orderList = orderDao.getOrders(orderQuaryParams);
+
+        for (Order order : orderList) {
+            List<OrderItem> orderItemList = orderDao.getOrderItemsByOrderId(order.getOrderId());
+            order.setOrderItemList(orderItemList);
+        }
+
+        return orderList;
     }
 }
