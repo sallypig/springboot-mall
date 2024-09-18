@@ -31,11 +31,13 @@ public class OrderController {
 
     @GetMapping("/users/{userId}/orders")
     public ResponseEntity<Page<Order>> getProducts(
+            @PathVariable Integer userId,
             // 分頁 Pagination
             @RequestParam(defaultValue = "10") @Max(1000) @Min(0) Integer limit,
             @RequestParam(defaultValue = "0") @Min(0) Integer offset
     ) {
         OrderQuaryParams orderQuaryParams = new OrderQuaryParams();
+        orderQuaryParams.setUserId(userId);
         orderQuaryParams.setLimit(limit);
         orderQuaryParams.setOffset(offset);
 

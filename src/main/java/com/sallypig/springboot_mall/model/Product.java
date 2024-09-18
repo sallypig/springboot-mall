@@ -14,14 +14,14 @@ public class Product {
     private Integer stock;
     private String description;
     private Date createdDate;
-    private Date last_modifiedDate;
+    private Date lastModifiedDate;
 
     public Integer getProductId() {
         return this.productId;
     }
 
-    public void setProduct_id(Integer product_id) {
-        this.productId = product_id;
+    public void setProductId(Integer productId) {
+        this.productId = productId;
     }
 
     public String getProductName() {
@@ -80,12 +80,12 @@ public class Product {
         this.createdDate = createdDate;
     }
 
-    public Date getLast_modifiedDate() {
-        return this.last_modifiedDate;
+    public Date getLastModifiedDate() {
+        return this.lastModifiedDate;
     }
 
-    public void setLast_modifiedDate(Date last_modifiedDate) {
-        this.last_modifiedDate = last_modifiedDate;
+    public void setLastModifiedDate(Date lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
     }
 
 }

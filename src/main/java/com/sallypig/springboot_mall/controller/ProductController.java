@@ -101,7 +101,7 @@ public class ProductController {
 
         Product updatedProduct = productService.getProductById(productId);
 
-        return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(updatedProduct);
+        return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(updatedProduct);
     }
 
     // 刪除，無論是否有刪到商品，只要商品不存在 都是回傳204，才是正確的後端設計
